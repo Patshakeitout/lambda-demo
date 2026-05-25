@@ -29,11 +29,21 @@ Eine Full-Stack-Demo-App zum Suchen von Mobilfunk-Shops, gebaut mit AWS Lambda, 
 
 ## Deployment
 
+### Backend
 ```bash
 npm install
 npx tsc
 serverless deploy
 ```
+
+### Frontend
+```bash
+cd fe
+npm install
+ng build
+```
+
+Das Build-Output (`fe/dist/`) kann auf einem Webserver oder S3/CloudFront gehostet werden. Die API-URL muss in `fe/src/app/shop.service.ts` eingetragen werden.
 
 ## Lokale Entwicklung
 
@@ -41,8 +51,10 @@ serverless deploy
 # Backend
 serverless dev
 
-# Frontend
+# Frontend (separates Terminal)
 cd fe
 npm install
 ng serve
 ```
+
+Frontend läuft dann auf `http://localhost:4200`, Backend-Endpunkte werden direkt gegen AWS aufgerufen.
