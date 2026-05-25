@@ -1,0 +1,37 @@
+service: lambda-demo
+frameworkVersion: "4"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-north-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:GetItem
+            - dynamodb:Scan
+          Resource: arn:aws:dynamodb:eu-north-1:*:table/mobile-shops
+
+functions:
+  getShop:
+    handler: dist/handler.getShop
+    events:
+      - httpApi:
+          path: /shops/{id}
+          method: GET
+
+  getShopsByRegion:
+    handler: dist/handler.getShopsByRegion
+    events:
+      - httpApi:
+          path: /shops/region/{region}
+          method: GET
+
+  checkShopInCity:
+    handler: dist/handler.checkShopInCity
+    events:
+      - httpApi:
+          path: /shops/city/{city}/check
+          method: GET

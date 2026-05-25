@@ -1,0 +1,22 @@
+{
+  "name": "lambda-demo",
+  "version": "1.0.0",
+  "description": "Lambda Demo - HTTP API + DynamoDB",
+  "scripts": {
+    "build": "esbuild src/handler.ts --bundle --platform=node --target=node20 --outfile=dist/handler.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.4",
+    "@typescript-eslint/parser": "^8.59.4",
+    "esbuild": "^0.20.0",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.3",
+    "typescript": "^5.0.0"
+  }
+}

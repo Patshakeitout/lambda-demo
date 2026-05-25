@@ -1,0 +1,9 @@
+node_modules
+fe/node_modules
+.serverless
+27_freenet/
+*.pem
+scripts/seed.ts
+dist/
+fe/dist/
+fe/.angular/

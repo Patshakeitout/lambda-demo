@@ -1,0 +1,78 @@
+<div class="container">
+  <h1>Mobile Shop Finder</h1>
+  <p class="subtitle">Schleswig-Holstein</p>
+
+  <!-- Query 1: Alle Shops in Steinburg -->
+  <section class="card">
+    <h2>Shops in der Region Steinburg</h2>
+    <p class="description">Zeigt alle Standorte der Region Steinburg mit verfügbaren Tarifen.</p>
+    <button class="btn btn-primary" (click)="loadShopsInSteinburg()" [disabled]="regionLoading()">
+      {{ regionLoading() ? 'Lade...' : 'Alle Shops in Steinburg laden' }}
+    </button>
+
+    @if (regionError()) {
+      <div class="error">{{ regionError() }}</div>
+    }
+
+    @if (regionShops() !== null) {
+      <div class="results">
+        <p class="count">{{ regionShops()!.length }} Ergebnis(se)</p>
+        @for (shop of regionShops()!; track shop.id) {
+          <div class="shop-card" [class.has-shop]="shop.hasShop" [class.no-shop]="!shop.hasShop">
+            <div class="shop-header">
+              <span class="city">{{ shop.city }}</span>
+              <span class="badge" [class.badge-yes]="shop.hasShop" [class.badge-no]="!shop.hasShop">
+                {{ shop.hasShop ? 'Shop vorhanden' : 'Kein Shop' }}
+              </span>
+            </div>
+            @if (shop.hasShop) {
+              <p class="address">{{ shop.address }}</p>
+              <div class="plans">
+                @for (plan of shop.plans; track plan) {
+                  <span class="plan-tag">{{ plan }}</span>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+  <!-- Query 2: Hat Itzehoe einen Shop? -->
+  <section class="card">
+    <h2>Hat Itzehoe einen Shop?</h2>
+    <p class="description">Prüft ob in Itzehoe ein Standort existiert und welche Tarife dort verfügbar sind.</p>
+    <button class="btn btn-secondary" (click)="checkItzehoe()" [disabled]="cityLoading()">
+      {{ cityLoading() ? 'Prüfe...' : 'Itzehoe prüfen' }}
+    </button>
+
+    @if (cityError()) {
+      <div class="error">{{ cityError() }}</div>
+    }
+
+    @if (cityCheck() !== null) {
+      <div class="results">
+        <div class="city-result" [class.found]="cityCheck()!.hasShop" [class.not-found]="!cityCheck()!.hasShop">
+          <span class="result-icon">{{ cityCheck()!.hasShop ? '✓' : '✗' }}</span>
+          <div>
+            <strong>{{ cityCheck()!.city }}</strong>
+            <p>{{ cityCheck()!.hasShop ? 'Ja, es gibt einen Shop!' : 'Nein, kein Shop vorhanden.' }}</p>
+          </div>
+        </div>
+        @if (cityCheck()!.hasShop) {
+          @for (shop of cityCheck()!.shops; track shop.id) {
+            <div class="shop-card has-shop">
+              <p class="address">{{ shop.address }}</p>
+              <div class="plans">
+                @for (plan of shop.plans; track plan) {
+                  <span class="plan-tag">{{ plan }}</span>
+                }
+              </div>
+            </div>
+          }
+        }
+      </div>
+    }
+  </section>
+</div>
